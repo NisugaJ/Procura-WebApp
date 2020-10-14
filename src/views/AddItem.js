@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Radio from "@material-ui/core/Radio";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -43,16 +38,12 @@ export default function AddItem() {
   const [form, setForm] = useState(formInit)
   const [selectedValue, setSelectedValue] = React.useState(null);
 
-  const handleChange = ({ target }) => {
-    const name = target.name
-    const value = target.value
-    const frm = { ...form, [name]: value }
-    setForm(frm)
-  }
+  const handleChange = ({ target }) => setForm({ ...form, [target.name]: target.value })
 
   const handleSubmit = (event) => {
     event.preventDefault()
     console.log(form)
+    setForm(formInit)
   }
 
   return (

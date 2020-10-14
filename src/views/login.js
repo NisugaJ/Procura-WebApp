@@ -37,16 +37,12 @@ export default function SignIn() {
   const [form, setForm] = useState(formInit)
   const [selectedValue, setSelectedValue] = React.useState(null);
 
-  const handleChange = ({ target }) => {
-    const name = target.name
-    const value = target.value
-    const frm = { ...form, [name]: value }
-    setForm(frm)
-  }
+  const handleChange = ({ target }) => setForm({ ...form, [target.name]: target.value })
 
   const handleSubmit = (event) => {
     event.preventDefault()
     console.log(form)
+    setForm(formInit)
   }
 
   return (
