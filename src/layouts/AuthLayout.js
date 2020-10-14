@@ -40,7 +40,7 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  // const [mobileOpen, setMobileOpen] = React.useState(false);
   // const handleImageClick = (image) => {
   //   setImage(image);
   // };
@@ -54,15 +54,15 @@ export default function Admin({ ...rest }) {
   //     setFixedClasses("dropdown");
   //   }
   // };
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  // const handleDrawerToggle = () => {
+  //   setMobileOpen(!mobileOpen);
+  // };
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
-      setMobileOpen(false);
+      // setMobileOpen(false);
     }
   };
   // initialize and destroy the PerfectScrollbar plugin
