@@ -33,6 +33,7 @@ import Icons from "views/Icons/Icons.js";
 import { Unarchive } from "@material-ui/icons";
 import Login from "views/login.js";
 import OrdersList from "views/Orders/OrdersList";
+import AddItem from 'views/AddItem'
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 // import RTLPage from "views/RTLPage/RTLPage.js";
@@ -102,11 +103,18 @@ const dashboardRoutes = [
     component: Icons,
     layout: "/admin",
   },
-    {
+  {
     path: "/login",
     name: "Login",
     icon: Unarchive,
     component: Login,
+    layout: "/auth",
+  },
+  {
+    path: "/addItems",
+    name: "Add Item",
+    icon: Unarchive,
+    component: AddItem,
     layout: "/auth",
   },
 ];

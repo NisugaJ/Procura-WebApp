@@ -17,22 +17,28 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const formInputs = [
-  { label: 'Email', name: 'email', type: 'text', autoFocus: true },
-  { label: 'Password', name: 'password', type: 'password' },
+  { label: 'Product ID', name: 'productId', type: 'text' },
+  { label: 'Name', name: 'name', type: 'text' },
+  { label: 'Supplier', name: 'supplier', type: 'text' },
+  { label: 'Available Quantity', name: 'availableQty', type: 'number' },
+  { label: 'Maximum Quantity', name: 'maximumQty', type: 'number' },
+  { label: 'Price', name: 'price', type: 'number' },
 ]
-
 const formRadio = [
-  { name: 'staff', value: 'Procurement Staff' },
-  { name: 'staff', value: 'Management Staff' },
+  { name: 'special', value: 'yes' },
+  { name: 'special', value: 'no' },
 ]
-
 const formInit = {
-  email: '',
-  password: '',
-  staff: '',
+  productId: '',
+  name: '',
+  supplier: '',
+  availableQty: '',
+  maximumQty: '',
+  price: '',
+  special: ''
 }
 
-export default function SignIn() {
+export default function AddItem() {
   const classes = useStyles();
   const [form, setForm] = useState(formInit)
   const [selectedValue, setSelectedValue] = React.useState(null);
@@ -53,14 +59,28 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography style={{ fontWeight: "bold" }} component="h2" variant="h2">Procura</Typography>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Add Item
         </Typography>
-        <div>
+
+        <form className={classes.form} noValidate>
+          {formInputs.map((d, i) =>
+            <TextField
+              key={i}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="regular"
+              label={d.label}
+              name={d.name}
+              autoFocus
+              type={d.type}
+              onChange={handleChange}
+            />
+          )}
+          <div>
+            Special Approval :
           {formRadio.map((d, i) =>
             <>
               <Radio
@@ -82,28 +102,7 @@ export default function SignIn() {
               {d.value}
             </>
           )}
-        </div>
-        <form className={classes.form} noValidate>
-          {formInputs.map((d, i) =>
-            <TextField
-              key={i}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name={d.name}
-              label={d.label}
-              id={d.name}
-              autoComplete={d.name}
-              onChange={handleChange}
-              autoFocus
-              type={d.type}
-            />
-          )}
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          </div>
           <Button
             type="submit"
             fullWidth
@@ -112,21 +111,8 @@ export default function SignIn() {
             className={classes.submit}
             onClick={(e) => handleSubmit(e)}
           >
-            Sign In
+            Submit
           </Button>
-          <Grid container>
-            <Grid item>
-              {/* <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link> */}
-            </Grid>
-            <Grid item  >
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
