@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -9,6 +9,10 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import OrderItem from "./OrderItem";
+import PerfectScrollbar from "perfect-scrollbar";
+
+
+let ps;
 
 const styles = {
   cardCategoryWhite: {
@@ -37,13 +41,36 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  cardBody:{
+    // overflowY:"scroll",
+    height: "500px"
   }
 };
 
 const useStyles = makeStyles(styles);
 
 export default function OrdersList() {
-  const classes = useStyles();
+  const ordersBody = createRef()
+  const classes = useStyles()
+
+  useEffect(()=>{
+    ps = new PerfectScrollbar(ordersBody.current,{
+      suppressScrollX: true,
+      suppressScrollY: false,
+      wheelSpeed: 1,
+      wheelPropagation: true,
+      minScrollbarLength: 20
+    });
+
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      if (navigator.platform.indexOf("Win") > -1) {
+        ps.destroy();
+      }
+    };
+  },[ordersBody])
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -54,11 +81,13 @@ export default function OrdersList() {
               Latest recent orders are listed here.
             </p>
           </CardHeader>
-          <CardBody>
-              {[1,2,3].map((value,index)=>{
-                return <OrderItem item={value}/>
-              })}
-          </CardBody>
+          <div ref={ordersBody}>
+            <CardBody className={classes.cardBody}>
+                {[1,2,3].map((value,index)=>{
+                  return <OrderItem item={value}/>
+                })}
+            </CardBody>
+          </div>
         </Card>
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
