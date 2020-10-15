@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import TextField from '@material-ui/core/TextField';
 import PrettoSlider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const formInit = {
   itemLimit: 20,
@@ -19,12 +20,16 @@ export default function SettingPolicies() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(form)
+
+    if (form.itemLimit === '' || form.maxOrders === '') return toast.error("Please fill all column")
+
+    toast.success("Successfully submitted")
     setForm(formInit)
   }
 
   return (
     <form style={{ display: 'flex', flexDirection: 'column' }}>
+      <ToastContainer />
       <section style={{ display: 'flex', flexDirection: 'column' }}>
         <label style={{ padding: 10 }}>Set item amount warning limit</label>
         <PrettoSlider style={{ padding: 10, width: 300 }} onChange={handleSliderChange} value={typeof form.itemLimit === 'number' ? form.itemLimit : 0} name="itemLimit" valueLabelDisplay="auto" aria-label="pretto slider" defaultValue={20} />
