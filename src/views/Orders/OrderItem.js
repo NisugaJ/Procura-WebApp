@@ -6,6 +6,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
+import Button from "components/CustomButtons/Button.js";
 
 import { cardTitle } from "assets/jss/material-dashboard-react.js";
 import StoreFront from '@material-ui/icons/Storefront';
@@ -53,7 +54,7 @@ export default function OrderItem(){
                   <GridItem xs={12} sm={6} md={3} elevation={1} >
                      <img className={classes.orderImage} alt="orderImg" src={require("../../assets/img/goods/cement_bag.jpg")} />
                   </GridItem>
-                  <GridItem xs={12} sm={6} md={4}>
+                  <GridItem xs={12} sm={6} md={3}>
                       <h4 className={classes.cardTitle}>
                         Rs. 202800.88 
                       </h4>
@@ -83,13 +84,18 @@ export default function OrderItem(){
                         <Muted> Delivery Date <code>10/09/2020</code> </Muted>
                       </div>
                 </GridItem>
-                <GridItem xs={12} sm={6} md={5} >
+                <GridItem xs={12} sm={6} md={3} >
                   <Box>
                       <label>Delivery Advice Notice</label>
                           <p>Please deliver only after sanitizing the packages</p>    
                       <label>Comment</label>
                           <p>Urgent</p>
                   </Box>
+                </GridItem>
+                <GridItem xs={12} sm={6} md={3} >
+                  <Button color="info">  
+                    Approve Order
+                  </Button>
                 </GridItem>
                </GridContainer>
             </CardBody>
