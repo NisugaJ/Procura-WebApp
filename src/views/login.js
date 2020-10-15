@@ -13,7 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Radio from "@material-ui/core/Radio";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { makeStyles } from '@material-ui/core/styles';
 
 const formInputs = [
@@ -41,12 +42,16 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(form)
+
+    if (form.email === '' || form.password === '' || form.staff === '') return toast.error("Please fill all column")
+
+    toast.success("Successfully submitted")
     setForm(formInit)
   }
 
   return (
     <Container component="main" maxWidth="xs">
+      <ToastContainer />
       <CssBaseline />
       <div className={classes.paper}>
         <Typography style={{ fontWeight: "bold" }} component="h2" variant="h2">Procura</Typography>
