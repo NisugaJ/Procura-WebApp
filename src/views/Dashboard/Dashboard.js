@@ -28,6 +28,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import Button from "components/CustomButtons/Button.js";
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -256,6 +257,112 @@ export default function Dashboard() {
                   ["4", "Philip Chaney", "$38,735", "Korea, South"]
                 ]}
               />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+
+      <GridContainer>
+
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+
+            <CardBody>
+              <h4 className={classes.cardTitleBlack} style={{ textAlign: 'center' }}>ORD000001 - Cement</h4>
+
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={2}>
+                  <img
+                    className={classes.cardImgTop}
+                    alt="100%x180"
+                    style={{ height: "150px", width: "100%", display: "block", border: "1px solid black" }}
+                    src=""
+                    data-holder-rendered="true"
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Status:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Supplier:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Total Price:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Quantity:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Requered date:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Constuction site:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={4}>
+                      <label style={{ color: "black", fontSize: 15 }}>Comment:</label>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                      <label style={{ color: "black", fontSize: 15 }}></label>
+                    </GridItem>
+                  </GridContainer>
+                </GridItem>
+                <GridItem xs={12} sm={12} md={4}>
+                  <Button type="button" color="success" style={{ width: "40%" }}>Approve</Button><br />
+                  <Button type="button" color="info" style={{ width: "40%" }}>Proceess</Button><br />
+                  <Button type="button" color="danger" style={{ width: "40%" }}>Reject</Button><br />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <h4 style={{ textAlign: 'center' }}>Summary</h4>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardBody>
+              <h4 className={classes.cardTitleBlack} style={{ textAlign: 'center' }}>ORD000001 - Cement</h4>
+
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={8}>
+                  <label>From</label>
+                </GridItem>
+              </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
