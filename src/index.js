@@ -26,27 +26,32 @@ import AuthLayout from "layouts/AuthLayout.js";
 // import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
+import { ThemeProvider } from "@material-ui/core";
+import { theme } from "theme.js";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin"
-        render={ props =>{
-          if(isLogged()){
-            return (<Admin {...props} />)
-          }else{
-            return(<Redirect
-              to="/auth/login"
-            />)
-          }
-        }}
-      />
-      <Route path="/auth" component={AuthLayout} />
-      {/* <Route path="/rtl" component={RTL} /> */}
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </Router>,
+  <ThemeProvider theme={theme}>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/admin"
+          render={ props =>{
+            if(isLogged()){
+              return (<Admin {...props} />)
+            }else{
+              return(<Redirect
+                to="/auth/login"
+              />)
+            }
+          }}
+        />
+        <Route path="/auth" component={AuthLayout} />
+        {/* <Route path="/rtl" component={RTL} /> */}
+        <Redirect from="/" to="/admin/dashboard" />
+      </Switch>
+    </Router>
+  </ThemeProvider>
+  ,
   document.getElementById("root")
 );
