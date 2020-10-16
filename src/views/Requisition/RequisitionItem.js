@@ -11,6 +11,8 @@ import { cardTitle } from "assets/jss/material-dashboard-react.js";
 import StoreFront from '@material-ui/icons/Storefront';
 import Muted from "components/Typography/Muted.js";
 import Button from "components/CustomButtons/Button.js";
+import baseAxios from "config/auth/axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const styles = {
   orderBox: {
@@ -36,17 +38,53 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function RequisitionItem() {
+export default function RequisitionItem({ requisition }) {
   const classes = useStyles();
+
+  const approveOrReject = (status) => {
+    if (status === 'ORDER_PLACED') {
+      baseAxios.post('/requisition/placeApprovedOrder', {
+        reqId: requisition._id
+      }).then(response => {
+        //alert(JSON.stringify(response.data))
+        if (response) {
+          toast.success('Approved', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          toast.success('Email sent to the supplier', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      }).catch(e => {
+        //alert(e)
+        toast.error(e)
+      })
+    } else if (status === 'REJECTED') {
+
+    }
+  }
 
   return (
     <Box className={classes.orderBox}>
+      <ToastContainer />
       <Card >
         <CardHeader color="info"  >
           <CardIcon color="warning">
             <Icon>content_copy</Icon>
           </CardIcon>
-          <Typography><b> ORD00001 - Cement</b></Typography>
+          <Typography><b> {requisition.itemId.itemName}</b></Typography>
         </CardHeader>
         <CardBody>
           <GridContainer >
@@ -55,42 +93,41 @@ export default function RequisitionItem() {
             </GridItem>
             <GridItem xs={12} sm={6} md={3}>
               <h4 className={classes.cardTitle}>
-                aa
+                {requisition.totalPrice}
               </h4>
               <Chip
                 style={{ backgroundColor: "orange" }}
-                label="x 100"
+                label={"x " + requisition.quantity}
                 size="small" />
               <Chip
                 className={classes.chip}
                 size="small"
                 style={{ backgroundColor: "orange" }}
-                label="Pending"
+                label={requisition.status}
               />
               <Chip
                 icon={<StoreFront />}
-                label="Holcim"
+                label={requisition.supplierId.name + ", " + requisition.supplierId.location}
                 size="small"
                 className={classes.chip}
               />
 
               <div className={classes.deliveryDate} >
-                <Muted> Delivery Date <code>10/09/2020</code> </Muted>
+                <Muted> Delivery Date <code>{requisition.requisitionDate}</code> </Muted>
               </div>
             </GridItem>
             <GridItem xs={12} sm={6} md={4} >
               <Box>
                 <label>Construction site</label>
-                <p>Colombo</p>
-                <label>Comment</label>
-                <p>Urgent</p>
+                <p>{requisition.siteId.location}</p>
+                {/* <label>Comment</label>
+                <p>Urgent</p> */}
               </Box>
             </GridItem>
             <GridItem xs={12} sm={6} md={2} >
               <Box>
-                <Button type="button" color="success" style={{ width: "50%" }}>Approve</Button><br />
-                <Button type="button" color="info" style={{ width: "50%" }}>Proceess</Button><br />
-                <Button type="button" color="danger" style={{ width: "50%" }}>Reject</Button><br />
+                <Button type="button" color="success" style={{ width: "50%" }} onClick={() => approveOrReject('ORDER_PLACED')} >Approve</Button><br />
+                <Button type="button" color="danger" style={{ width: "50%" }} onClick={() => approveOrReject('REJECTED')} >Reject</Button><br />
               </Box>
             </GridItem>
           </GridContainer>

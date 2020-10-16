@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from "react";
+import React, { createRef, useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -9,7 +9,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import RequisitionItem from "./RequisitionItem";
 import PerfectScrollbar from "perfect-scrollbar";
-import axios from 'axios';
+import baseAxios from "../../config/auth/axios";
+import { toast, ToastContainer } from "react-toastify";
 
 let ps;
 
@@ -51,13 +52,20 @@ const useStyles = makeStyles(styles);
 
 
 export default function RequisitionList() {
-  /*
-    const [state] = useState({
-      Requisitions: []
-    })*/
-
   const ordersBody = createRef()
   const classes = useStyles()
+  const [requisitions, setRequisitions] = useState([])
+
+
+  useEffect(() => {
+    baseAxios.get('/requisition/adminAll')
+      .then((response) => {
+        if (response.data.success)
+          setRequisitions(response.data.requisitions)
+        else
+          toast.error("Failed to get Requisitions details")
+      })
+  }, [])
 
   useEffect(() => {
     ps = new PerfectScrollbar(ordersBody.current, {
@@ -77,17 +85,10 @@ export default function RequisitionList() {
   }, [ordersBody])
 
 
-  axios.get('http://localhost:8000/Requisitions/all')
-    .then(response => {
-      this.setState({ Requisitions: response.data });
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-
 
   return (
     <GridContainer>
+      <ToastContainer />
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
@@ -98,8 +99,8 @@ export default function RequisitionList() {
           </CardHeader>
           <div ref={ordersBody}>
             <CardBody className={classes.cardBody}>
-              {[1, 2, 3].map((value, index) => {
-                return <RequisitionItem item={value} />
+              {requisitions.map((requisition, index) => {
+                return <RequisitionItem requisition={requisition} />
               })}
             </CardBody>
           </div>

@@ -28,7 +28,7 @@ import "assets/css/material-dashboard-react.css?v=1.9.0";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "theme.js";
 import { isLogged } from "config/auth/auth";
-import { ToastContainer } from "react-toastify";
+//import { ToastContainer } from "react-toastify";
 
 const hist = createBrowserHistory();
 
@@ -37,11 +37,11 @@ ReactDOM.render(
     <Router history={hist}>
       <Switch>
         <Route path="/admin"
-          render={ props =>{
-            if(isLogged()){
+          render={props => {
+            if (isLogged()) {
               return (<Admin {...props} />)
-            }else{
-              return(<Redirect
+            } else {
+              return (<Redirect
                 to="/auth/login"
               />)
             }
