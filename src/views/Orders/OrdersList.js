@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from "react";
+import React, { createRef, useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -20,6 +20,8 @@ import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
 import Update from "@material-ui/icons/Update";
 import Accessibility from "@material-ui/icons/Accessibility";
+import baseAxios from "config/auth/axios";
+import { toast, ToastContainer } from "react-toastify";
 
 let ps;
 
@@ -62,6 +64,18 @@ const useStyles = makeStyles(styles);
 export default function OrdersList() {
   const ordersBody = createRef()
   const classes = useStyles()
+  const[orders, setOrders] = useState([])
+
+
+  useEffect(() =>{
+    baseAxios.get('/order/all')
+      .then((response) => {
+        if(response.data.success)
+          setOrders(response.data.orders)
+        else
+          toast.error("Failed to get orders details")
+      })
+  },[])
 
   useEffect(()=>{
     ps = new PerfectScrollbar(ordersBody.current,{
@@ -82,6 +96,7 @@ export default function OrdersList() {
 
   return (
     <GridContainer>
+      <ToastContainer/>
       <GridItem xs={12} sm={12} md={12}>
 
         <GridContainer>
@@ -171,8 +186,8 @@ export default function OrdersList() {
           </CardHeader>
           <div ref={ordersBody}>
             <CardBody className={classes.cardBody}>
-                {[1,2,3].map((value,index)=>{
-                  return <OrderItem item={value}/>
+                {orders.map((order,index)=>{
+                  return <OrderItem order={order}/>
                 })}
             </CardBody>
           </div>
