@@ -6,6 +6,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
+import Button from "components/CustomButtons/Button.js";
 
 import { cardTitle } from "assets/jss/material-dashboard-react.js";
 import StoreFront from '@material-ui/icons/Storefront';
@@ -19,8 +20,8 @@ const styles= {
   orderImage:{
     borderRadius:10,
     height:"height", 
-    width: "10rem" ,
-    // boxShadow:"0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
+    width: "15rem" ,
+    // boxShadw:"0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
   },
   cardTitle:{
     ...cardTitle,
@@ -36,7 +37,7 @@ const styles= {
 
 const useStyles = makeStyles(styles);
 
-export default function OrderItem(){
+export default function OrderItem({order}){
     const classes = useStyles();
 
     return (
@@ -51,45 +52,50 @@ export default function OrderItem(){
             <CardBody>
                <GridContainer >
                   <GridItem xs={12} sm={6} md={3} elevation={1} >
-                     <img className={classes.orderImage} alt="orderImg" src={require("../../assets/img/goods/cement_bag.jpg")} />
+                     <img className={classes.orderImage} alt="orderImg" src="https://firebasestorage.googleapis.com/v0/b/csseproject-5ca2c.appspot.com/o/Procurement%20System%2FItems%2Fcement%2Fcement.png?alt=media&token=96f1e299-6bcd-4119-83c9-59e10b5e58ce" />
                   </GridItem>
-                  <GridItem xs={12} sm={6} md={4}>
+                  <GridItem xs={12} sm={6} md={3}>
                       <h4 className={classes.cardTitle}>
-                        Rs. 202800.88 
+                        Rs. {order.totalPrice}
                       </h4>
                       <Chip 
                         style={{backgroundColor:"orange"}} 
-                        label="x 100" 
+                        label={"x "+order.orderedCount} 
                         size="small" />
                       <Chip  
                          className={classes.chip}
                          size="small"
-                         style={{backgroundColor:"orange"}} 
-                         label="Recieved / Partially Recieved" 
+                         style={{backgroundColor: order.status === "DELIVERED" ? "green": "orange"}} 
+                         label={order.status}
                        />
                       <Chip
                         icon={<StoreFront />}
-                        label="Holcim"
+                        label={order.requisitionId.supplierId}
                         size="small" 
                         className={classes.chip}
                         />
                       <Chip
                         icon={<LocationOn />}
-                        label="Altair, Colombo 2"
+                        label={order.requisitionId.siteId}
                         size="small" 
                         className={classes.chip}
                       />
                       <div className={classes.deliveryDate} >
-                        <Muted> Delivery Date <code>10/09/2020</code> </Muted>
+                        <Muted> Delivery Date <code>{order.receivedDate}</code> </Muted>
                       </div>
                 </GridItem>
-                <GridItem xs={12} sm={6} md={5} >
+                <GridItem xs={12} sm={6} md={3} >
                   <Box>
                       <label>Delivery Advice Notice</label>
                           <p>Please deliver only after sanitizing the packages</p>    
                       <label>Comment</label>
-                          <p>Urgent</p>
+                          <p>{order.requisitionId.comment}</p>
                   </Box>
+                </GridItem>
+                <GridItem xs={12} sm={6} md={3} >
+                  <Button color="info">  
+                    Approve Order
+                  </Button>
                 </GridItem>
                </GridContainer>
             </CardBody>

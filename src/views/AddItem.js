@@ -8,7 +8,8 @@ import Link from '@material-ui/core/Link';
 import Radio from "@material-ui/core/Radio";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { makeStyles } from '@material-ui/core/styles';
 
 const formInputs = [
@@ -42,12 +43,16 @@ export default function AddItem() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(form)
+
+    if (form.productId === '' || form.name === '' || form.supplier === '' || form.availableQty === '' || form.maximumQty === '' || form.price === '' || form.special === '') return toast.error("Please fill all column")
+
+    toast.success("Successfully submitted")
     setForm(formInit)
   }
 
   return (
     <Container component="main" maxWidth="xs">
+      <ToastContainer />
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
