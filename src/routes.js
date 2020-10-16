@@ -31,10 +31,13 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Icons from "views/Icons/Icons.js";
 import { Unarchive } from "@material-ui/icons";
+import { ListAltOutlined } from "@material-ui/icons";
 import Login from "views/login.js";
 import OrdersList from "views/Orders/OrdersList";
 import AddItem from 'views/AddItem'
 import SettingPolicies from 'views/SettingPolicies';
+
+import RequisionList from "views/Requisition/OrdersList";
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 // import RTLPage from "views/RTLPage/RTLPage.js";
@@ -123,6 +126,13 @@ const dashboardRoutes = [
     name: "SettingPolicies",
     icon: Unarchive,
     component: SettingPolicies,
+    layout: "/admin",
+  },
+  {
+    path: "/requision",
+    name: "View Requisions",
+    icon: ListAltOutlined,
+    component: RequisionList,
     layout: "/admin",
   },
 ];
