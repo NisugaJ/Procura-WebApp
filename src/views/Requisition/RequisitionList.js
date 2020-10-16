@@ -7,9 +7,9 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import OrderItem from "./OrderItem";
+import RequisitionItem from "./RequisitionItem";
 import PerfectScrollbar from "perfect-scrollbar";
-
+import axios from 'axios';
 
 let ps;
 
@@ -49,7 +49,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function OrdersList() {
+
+export default function RequisitionList() {
+  /*
+    const [state] = useState({
+      Requisitions: []
+    })*/
+
   const ordersBody = createRef()
   const classes = useStyles()
 
@@ -70,6 +76,16 @@ export default function OrdersList() {
     };
   }, [ordersBody])
 
+
+  axios.get('http://localhost:8000/Requisitions/all')
+    .then(response => {
+      this.setState({ Requisitions: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -83,7 +99,7 @@ export default function OrdersList() {
           <div ref={ordersBody}>
             <CardBody className={classes.cardBody}>
               {[1, 2, 3].map((value, index) => {
-                return <OrderItem item={value} />
+                return <RequisitionItem item={value} />
               })}
             </CardBody>
           </div>

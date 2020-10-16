@@ -36,7 +36,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function OrderItem() {
+export default function RequisitionItem() {
   const classes = useStyles();
 
   return (
@@ -55,8 +55,8 @@ export default function OrderItem() {
             </GridItem>
             <GridItem xs={12} sm={6} md={3}>
               <h4 className={classes.cardTitle}>
-                Rs. 202800.88
-                      </h4>
+                aa
+              </h4>
               <Chip
                 style={{ backgroundColor: "orange" }}
                 label="x 100"

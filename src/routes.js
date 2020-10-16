@@ -17,7 +17,6 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Assistant from "@material-ui/icons/Assistant";
 import AssignmentTurnedIn from "@material-ui/icons/AssignmentTurnedIn";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import Receipt from "@material-ui/icons/Receipt";
@@ -37,7 +36,8 @@ import OrdersList from "views/Orders/OrdersList";
 import AddItem from 'views/AddItem'
 import SettingPolicies from 'views/SettingPolicies';
 
-import RequisionList from "views/Requisition/OrdersList";
+import RequisitionList from "views/Requisition/RequisitionList";
+import Summary from "views/Summary/Summary";
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 // import RTLPage from "views/RTLPage/RTLPage.js";
@@ -49,14 +49,6 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
-  },
-  {
-    path: "/requisitions",
-    name: "Requisitions",
-    rtlName: "لوحة القيادة",
-    icon: Assistant,
-    component: TableList,
     layout: "/admin",
   },
   {
@@ -132,7 +124,14 @@ const dashboardRoutes = [
     path: "/requision",
     name: "View Requisions",
     icon: ListAltOutlined,
-    component: RequisionList,
+    component: RequisitionList,
+    layout: "/admin",
+  },
+  {
+    path: "/summary",
+    name: "Summary",
+    icon: ListAltOutlined,
+    component: Summary,
     layout: "/admin",
   },
 ];
