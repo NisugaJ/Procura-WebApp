@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
+
+//initial state
 const formInit = {
   criticalPercentage: 20,
   limitPrice: '',
@@ -15,19 +17,29 @@ export default function SettingPolicies() {
 
   const [form, setForm] = useState(formInit)
 
+  //change state when input field changes
   const handleChange = ({ target }) => setForm({ ...form, [target.name]: target.value })
 
+  //change state when slider changes 
   const handleSliderChange = (event, newValue) => setForm({ ...form, criticalPercentage: newValue })
 
+  //run this function when user clicks the submit button
   const handleSubmit = async (event) => {
     event.preventDefault()
 
+    //check for empty values
     if (form.criticalPercentage === '' || form.limitPrice === '') return toast.error("Please fill all column")
 
+    //call post method
     const result = await axios.post('http://localhost:8000/settings/', form)
+
+    //check whether the data submitted to the database
     if (!result) return toast.error("Failed to save")
 
+    //notify the user
     toast.success("Successfully submitted")
+
+    //reset the state
     setForm({
       criticalPercentage: 20,
       limitPrice: '',
