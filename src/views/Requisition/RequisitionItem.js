@@ -46,7 +46,7 @@ export default function RequisitionItem({ requisition }) {
       baseAxios.post('/requisition/placeApprovedOrder', {
         reqId: requisition._id
       }).then(response => {
-        //alert(JSON.stringify(response.data))
+
         if (response) {
           toast.success('Approved', {
             position: "top-right",
@@ -72,7 +72,25 @@ export default function RequisitionItem({ requisition }) {
         toast.error(e)
       })
     } else if (status === 'REJECTED') {
+      baseAxios.post('/requisition/placeRejectOrder', {
+        reqId: requisition._id
+      }).then(response => {
 
+        if (response) {
+          toast.success('REJECTED', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      }).catch(e => {
+        //alert(e)
+        toast.error(e)
+      })
     }
   }
 

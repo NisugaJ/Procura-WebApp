@@ -38,7 +38,7 @@ import AddItem from 'views/AddItem'
 import SettingPolicies from 'views/SettingPolicies';
 
 import RequisitionList from "views/Requisition/RequisitionList";
-import Summary from "views/Summary/Summary";
+//import Summary from "views/Summary/Summary";
 import ItemsIndex from "views/Items/ItemsIndex";
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
@@ -128,14 +128,20 @@ const dashboardRoutes = [
     component: SettingPolicies,
     layout: "/admin",
   },
-
   {
-    path: "/summary",
-    name: "Summary",
+    path: "/requision",
+    name: "View Requisions",
     icon: ListAltOutlined,
-    component: Summary,
+    component: RequisitionList,
     layout: "/admin",
   },
+  // {
+  //   path: "/summary",
+  //   name: "Summary",
+  //   icon: ListAltOutlined,
+  //   component: Summary,
+  //   layout: "/admin",
+  // },
 ];
 
 export default dashboardRoutes;
