@@ -44,7 +44,7 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
-  const [image] = React.useState(bgImage);
+  // const [image] = React.useState(bgImage);
   const [color] = React.useState("blue");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   // const handleImageClick = (image) => {
@@ -95,7 +95,7 @@ export default function Admin({ ...rest }) {
         routes={routes}
         logoText={"Procura"}
         logo={logo}
-        image={image}
+        // image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={color}
