@@ -34,12 +34,12 @@ import { Gavel, Unarchive } from "@material-ui/icons";
 import { ListAltOutlined } from "@material-ui/icons";
 import Login from "views/login.js";
 import OrdersList from "views/Orders/OrdersList";
-import AddItem from 'views/AddItem'
 import SettingPolicies from 'views/SettingPolicies';
 
 import RequisitionList from "views/Requisition/RequisitionList";
 import Summary from "views/Summary/Summary";
 import ItemsIndex from "views/Items/ItemsIndex";
+import { getLoggedInUserType } from "config/auth/auth";
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 // import RTLPage from "views/RTLPage/RTLPage.js";
@@ -106,14 +106,14 @@ const dashboardRoutes = [
   //   component: UserProfile,
   //   layout: "/admin",
   // },
-  {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   rtlName: "الرموز",
+  //   icon: BubbleChart,
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
   {
     path: "/login",
     name: "Login",
@@ -122,14 +122,6 @@ const dashboardRoutes = [
     layout: "/auth",
   },
   {
-    path: "/settingPolicies",
-    name: "Setting Policies",
-    icon: Gavel,
-    component: SettingPolicies,
-    layout: "/admin",
-  },
-
-  {
     path: "/summary",
     name: "Summary",
     icon: ListAltOutlined,
@@ -137,5 +129,19 @@ const dashboardRoutes = [
     layout: "/admin",
   },
 ];
+
+const type =  getLoggedInUserType()
+console.log(type);
+if(type === 'MANAGER'){
+  dashboardRoutes.push(
+    {
+      path: "/settingPolicies",
+      name: "Setting Policies",
+      icon: Gavel,
+      component: SettingPolicies,
+      layout: "/admin",
+    },
+  )
+}
 
 export default dashboardRoutes;

@@ -11,7 +11,7 @@ import { CircularProgress, Container } from "@material-ui/core";
 import ItemsTable from "./ItemsTable";
 import baseAxios from "config/auth/axios";
 
-const useStyles = makeStyles(stylesDashboard);
+// const useStyles = makeStyles(stylesDashboard);
 let ps;
 
 export default function ItemsIndex() {

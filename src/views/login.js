@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -16,19 +16,22 @@ import Typography from '@material-ui/core/Typography';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { makeStyles } from '@material-ui/core/styles';
+import baseAxios from 'config/auth/axios';
+import { isLogged } from 'config/auth/auth';
+import { useHistory } from "react-router-dom"
 
 const formInputs = [
-  { label: 'Email', name: 'email', type: 'text', autoFocus: true },
+  { label: 'Username', name: 'username', type: 'text', autoFocus: true },
   { label: 'Password', name: 'password', type: 'password' },
 ]
 
 const formRadio = [
-  { name: 'staff', value: 'Procurement Staff' },
-  { name: 'staff', value: 'Management Staff' },
+  { name: 'staff', value: 'MANAGER' },
+  { name: 'staff', value: 'STAFF_MEMBER' },
 ]
 
 const formInit = {
-  email: '',
+  username: '',
   password: '',
   staff: '',
 }
@@ -37,15 +40,45 @@ export default function SignIn() {
   const classes = useStyles();
   const [form, setForm] = useState(formInit)
   const [selectedValue, setSelectedValue] = React.useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(isLogged())
+  const history = useHistory()
 
   const handleChange = ({ target }) => setForm({ ...form, [target.name]: target.value })
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("Now admin Dashboard should load")
+      history.replace("/admin") //Going to admin panel
+      // window.location.pathname = "/dashboard"
+    }
+  }, [isLoggedIn, history])
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (form.email === '' || form.password === '' || form.staff === '') return toast.error("Please fill all column")
+    if (form.username === '' || form.password === '' || form.staff === '') return toast.error("Please fill all column")
 
-    toast.success("Successfully submitted")
+    baseAxios.post('/auth/login', {
+        username: form.username,
+        password: form.password,
+        type:form.staff
+      })
+      .then(response =>{
+        const data = response.data
+
+        if(data.accessToken && data.user.username){
+          sessionStorage.setItem("user", JSON.stringify(data))
+          console.log(JSON.parse(sessionStorage.getItem("user")));
+          setIsLoggedIn(true)
+          console.log("Login Successfull")
+        }else{
+          toast.error("Invalid login")
+        }
+      })
+      .catch(e =>{
+        toast.error("Login failed. " + e.message)
+      })
+
     setForm(formInit)
   }
 
@@ -141,7 +174,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://procura.com/">
         Procura
       </Link>{' '}
       {new Date().getFullYear()}
