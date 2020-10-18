@@ -12,6 +12,8 @@ import PerfectScrollbar from "perfect-scrollbar";
 import baseAxios from "../../config/auth/axios";
 import { toast, ToastContainer } from "react-toastify";
 
+
+
 let ps;
 
 const styles = {
@@ -67,6 +69,8 @@ export default function RequisitionList() {
       })
   }, [])
 
+
+
   useEffect(() => {
     ps = new PerfectScrollbar(ordersBody.current, {
       suppressScrollX: true,
@@ -92,9 +96,9 @@ export default function RequisitionList() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Recent Orders</h4>
+            <h4 className={classes.cardTitleWhite}>Reqisitions</h4>
             <p className={classes.cardCategoryWhite}>
-              Latest recent orders are listed here.
+              View reqisitions to approve or reject.
             </p>
           </CardHeader>
           <div ref={ordersBody}>
