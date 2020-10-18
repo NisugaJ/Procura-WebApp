@@ -121,15 +121,15 @@ const dashboardRoutes = [
     component: Login,
     layout: "/auth",
   },
-  {
+  // {
   
-    path: "/settingPolicies",
-    name: "Setting Policies",
-    icon: Gavel,
-    component: SettingPolicies,
-    layout: "/admin",
+  //   path: "/settingPolicies",
+  //   name: "Setting Policies",
+  //   icon: Gavel,
+  //   component: SettingPolicies,
+  //   layout: "/admin",
  
-  },
+  // },
   // {
   //   path: "/summary",
   //   name: "Summary",
