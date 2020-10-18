@@ -1,5 +1,5 @@
 import { Box, Chip, Icon, makeStyles, Typography } from "@material-ui/core"
-import React from "react"
+import React, { useState } from "react"
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
@@ -12,6 +12,8 @@ import { cardTitle } from "assets/jss/material-dashboard-react.js";
 import StoreFront from '@material-ui/icons/Storefront';
 import LocationOn from '@material-ui/icons/LocationOn';
 import Muted from "components/Typography/Muted.js";
+import baseAxios from "config/auth/axios";
+import { toast } from "react-toastify";
 
 const styles= {
   orderBox:{
@@ -37,8 +39,50 @@ const styles= {
 
 const useStyles = makeStyles(styles);
 
-export default function OrderItem({order}){
+export default function OrderItem({orderProp}){
     const classes = useStyles();
+    const [order] = useState(orderProp)
+
+    const addToPayment =  () => {
+      baseAxios.post('/order/pay', {
+        orderId: order._id
+      })
+      .then(response => {
+        if (response.data.success) {
+          toast.success('Added to payment queue', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          order.payStatus = false
+        }else{
+          toast.error('Failed to add to payment queue', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        }
+      })
+      .catch(e=>{
+          toast.error('Failed to add to payment queue'+e.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+      })
+    }
 
     return (
         <Box className={classes.orderBox}>
@@ -47,12 +91,12 @@ export default function OrderItem({order}){
               <CardIcon color="warning">
                 <Icon>content_copy</Icon>
               </CardIcon>
-              <Typography><b> ORD00001 - Cement</b></Typography>
+              <Typography><b> ORD00001 - {order.requisitionId.itemId.itemName}</b></Typography>
             </CardHeader>
             <CardBody>
                <GridContainer >
                   <GridItem xs={12} sm={6} md={3} elevation={1} >
-                     <img className={classes.orderImage} alt="orderImg" src="https://firebasestorage.googleapis.com/v0/b/csseproject-5ca2c.appspot.com/o/Procurement%20System%2FItems%2Fcement%2Fcement.png?alt=media&token=96f1e299-6bcd-4119-83c9-59e10b5e58ce" />
+                     <img className={classes.orderImage} alt="orderImg" src={order.requisitionId.itemId.photoURL11} />
                   </GridItem>
                   <GridItem xs={12} sm={6} md={3}>
                       <h4 className={classes.cardTitle}>
@@ -70,13 +114,13 @@ export default function OrderItem({order}){
                        />
                       <Chip
                         icon={<StoreFront />}
-                        label={order.requisitionId.supplierId}
+                        label={order.requisitionId.itemId.supplierId.name +" ,"+order.requisitionId.itemId.supplierId.location}
                         size="small" 
                         className={classes.chip}
                         />
                       <Chip
                         icon={<LocationOn />}
-                        label={order.requisitionId.siteId}
+                        label={order.requisitionId.siteId.location}
                         size="small" 
                         className={classes.chip}
                       />
@@ -93,9 +137,13 @@ export default function OrderItem({order}){
                   </Box>
                 </GridItem>
                 <GridItem xs={12} sm={6} md={3} >
-                  <Button color="info">  
-                    Approve Order
-                  </Button>
+                  {
+                    !order.payStatus  && order.status === 'DELIVERED' ?
+                      (<Button color="info" onClick={addToPayment}>  
+                        Pay Now
+                      </Button>)
+                    : null
+                  }
                 </GridItem>
                </GridContainer>
             </CardBody>
