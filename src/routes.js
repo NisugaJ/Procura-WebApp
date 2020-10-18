@@ -37,7 +37,7 @@ import OrdersList from "views/Orders/OrdersList";
 import SettingPolicies from 'views/SettingPolicies';
 
 import RequisitionList from "views/Requisition/RequisitionList";
-import Summary from "views/Summary/Summary";
+//import Summary from "views/Summary/Summary";
 import ItemsIndex from "views/Items/ItemsIndex";
 import { getLoggedInUserType } from "config/auth/auth";
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
@@ -122,12 +122,21 @@ const dashboardRoutes = [
     layout: "/auth",
   },
   {
-    path: "/summary",
-    name: "Summary",
-    icon: ListAltOutlined,
-    component: Summary,
+  
+    path: "/settingPolicies",
+    name: "Setting Policies",
+    icon: Gavel,
+    component: SettingPolicies,
     layout: "/admin",
+ 
   },
+  // {
+  //   path: "/summary",
+  //   name: "Summary",
+  //   icon: ListAltOutlined,
+  //   component: Summary,
+  //   layout: "/admin",
+  // },
 ];
 
 const type =  getLoggedInUserType()
