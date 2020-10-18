@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -11,27 +11,33 @@ import Typography from '@material-ui/core/Typography';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { makeStyles } from '@material-ui/core/styles';
+import baseAxios from 'config/auth/axios';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 
 const formInputs = [
-  { label: 'Product ID', name: 'productId', type: 'text' },
-  { label: 'Name', name: 'name', type: 'text' },
-  { label: 'Supplier', name: 'supplier', type: 'text' },
+  { label: 'Name', name: 'itemName', type: 'text' },
   { label: 'Available Quantity', name: 'availableQty', type: 'number' },
-  { label: 'Maximum Quantity', name: 'maximumQty', type: 'number' },
+  { label: 'Maximum Quantity', name: 'maxQty', type: 'number' },
+  { label: 'Weight per item', name: 'weightPerItem', type: 'number' },
   { label: 'Price', name: 'price', type: 'number' },
+  // { label: 'Picture 1', name: 'photoURL11', type: 'number' },
+  // { label: 'Picture 2', name: 'photoURL21', type: 'number' },
 ]
 const formRadio = [
   { name: 'special', value: 'yes' },
   { name: 'special', value: 'no' },
 ]
 const formInit = {
-  productId: '',
-  name: '',
-  supplier: '',
-  availableQty: '',
-  maximumQty: '',
+  // productId: '',
+  itemName: '',
+  supplierId: '',
+  weightPerItem:'',
+  special: '',
   price: '',
-  special: ''
+  maxQty: '',
+  availableQty: '',
+  photoURL11:'',
+  photoURL21:''
 }
 
 export default function AddItem() {
@@ -39,15 +45,57 @@ export default function AddItem() {
   const [form, setForm] = useState(formInit)
   const [selectedValue, setSelectedValue] = React.useState(null);
 
+  const [suppliers,setSuppliers] = useState([])
+  const [selectedSupp,setSelectedSupp] = useState(null)
+
+  var [fireBaseConfig,setFireBaseConfig] = useState()
+
+  useEffect(()=>{
+    baseAxios.get('/supplier/all')
+      .then(response => {
+        if(response.data.length > 0){
+          setSuppliers(response.data)
+        }
+      })
+      .catch(e =>{
+        toast.error("Failed to load suppliers. "+e.message)
+      })
+  },[])
+
   const handleChange = ({ target }) => setForm({ ...form, [target.name]: target.value })
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (form.productId === '' || form.name === '' || form.supplier === '' || form.availableQty === '' || form.maximumQty === '' || form.price === '' || form.special === '') return toast.error("Please fill all column")
+    if( form.itemName === '' || 
+        form.availableQty === '' || 
+        form.maxQty === '' || 
+        form.price === '' || 
+        form.special === '' 
+    ) return toast.error("Please fill all column")
 
-    toast.success("Successfully submitted")
-    setForm(formInit)
+    let formF = form
+    if(form.special = 'yes')
+      formF.category = 'SPECIAL_APPROVAL'
+    else
+      formF.category = 'NORMAL'
+
+    formF.supplierId = selectedSupp
+    formF.weightPerItem = form.weightPerItem
+    baseAxios.post("/item/register", formF)
+      .then(response =>{
+        if(response.data){
+          toast.success("Added item succcesfully")
+          setForm(formInit)
+
+        }
+        else{
+          toast.error("Failed")
+        }
+      })
+      .catch(e =>{
+          toast.error("Failed." +e.message)
+      })
   }
 
   return (
@@ -60,6 +108,22 @@ export default function AddItem() {
         </Typography>
 
         <form className={classes.form} noValidate>
+          <FormControl fullWidth >
+            <InputLabel id="demo-simple-select-label">Supplier</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedSupp}
+              onChange={(e)=>{
+                setSelectedSupp(e.target.value)
+              }}
+            >{
+              suppliers.map((val,index)=>{
+                return <MenuItem key={val._id} value={val._id}>{val.name + ', ' + val.location}</MenuItem>
+              })
+            }
+            </Select>
+        </FormControl>
           {formInputs.map((d, i) =>
             <TextField
               key={i}
@@ -111,25 +175,12 @@ export default function AddItem() {
           </Button>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+ 
     </Container>
   );
 }
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Procura
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 
 const useStyles = makeStyles((theme) => ({

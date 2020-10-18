@@ -1,6 +1,6 @@
 const isLogged = () => {
   
-  return true
+  // return true
   // return false
 
   if (typeof window !== "undefined") {

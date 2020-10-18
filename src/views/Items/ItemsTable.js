@@ -4,7 +4,7 @@ import {Button, CircularProgress, Dialog, DialogActions, DialogContent, LinearPr
 import { toast, ToastContainer} from "react-toastify";
 import baseAxios from "config/auth/axios";
 import ImagesViewer from "./ItemImagesViewer";
-import AddItem from "views/AddItem";
+import AddItem from "./AddItem";
 
 
 const ItemsTable = ({itemsData}) => {
