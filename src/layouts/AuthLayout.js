@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import routes from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/AuthLayoutStyle.js";
+import { isLogged } from "config/auth/auth";
 
 
 let ps;
@@ -18,6 +19,8 @@ const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === "/auth") {
+        if(prop.path === '/login' && isLogged())
+          return <Redirect from="/auth" to="/admin/dashboard" />
         return (
           <Route
             path={prop.layout + prop.path}
@@ -28,7 +31,6 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
 
@@ -40,7 +42,7 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  // const [mobileOpen, setMobileOpen] = React.useState(false);
   // const handleImageClick = (image) => {
   //   setImage(image);
   // };
@@ -54,15 +56,15 @@ export default function Admin({ ...rest }) {
   //     setFixedClasses("dropdown");
   //   }
   // };
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  // const handleDrawerToggle = () => {
+  //   setMobileOpen(!mobileOpen);
+  // };
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
-      setMobileOpen(false);
+      // setMobileOpen(false);
     }
   };
   // initialize and destroy the PerfectScrollbar plugin

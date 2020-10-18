@@ -17,6 +17,7 @@ import {
 
 const sidebarStyle = theme => ({
   drawerPaper: {
+    backgroundColor:"#37474f",
     border: "none",
     position: "fixed",
     top: "0",
