@@ -17,9 +17,9 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Assistant from "@material-ui/icons/Assistant";
 import AssignmentTurnedIn from "@material-ui/icons/AssignmentTurnedIn";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import Category from "@material-ui/icons/Category";
 import Receipt from "@material-ui/icons/Receipt";
 import Person from "@material-ui/icons/Person";
 import BubbleChart from "@material-ui/icons/BubbleChart";
@@ -30,11 +30,16 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Icons from "views/Icons/Icons.js";
-import { Unarchive } from "@material-ui/icons";
+import { Gavel, Unarchive } from "@material-ui/icons";
+import { ListAltOutlined } from "@material-ui/icons";
 import Login from "views/login.js";
 import OrdersList from "views/Orders/OrdersList";
 import AddItem from 'views/AddItem'
 import SettingPolicies from 'views/SettingPolicies';
+
+import RequisitionList from "views/Requisition/RequisitionList";
+import Summary from "views/Summary/Summary";
+import ItemsIndex from "views/Items/ItemsIndex";
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 // import RTLPage from "views/RTLPage/RTLPage.js";
@@ -48,28 +53,33 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin",
   },
+  // {
+  //   path: "/approvals",
+  //   name: "Approval",
+  //   rtlName: "لوحة القيادة",
+  //   icon: AssignmentTurnedIn,
+  //   component: TableList,
+  //   layout: "/admin",
+  // },
   {
-    path: "/requisitions",
-    name: "Requisitions",
-    rtlName: "لوحة القيادة",
-    icon: Assistant,
-    component: TableList,
-    layout: "/admin",
-  },
-  {
-    path: "/approvals",
-    name: "Approval",
-    rtlName: "لوحة القيادة",
-    icon: AssignmentTurnedIn,
-    component: TableList,
+    path: "/requision",
+    name: "View Requisions",
+    icon: ListAltOutlined,
+    component: RequisitionList,
     layout: "/admin",
   },
   {
     path: "/orders",
     name: "Orders",
-    rtlName: "لوحة القيادة",
     icon: ShoppingCart,
     component: OrdersList,
+    layout: "/admin",
+  },
+  {
+    path: "/items",
+    name: "Items",
+    icon: Category,
+    component: ItemsIndex,
     layout: "/admin",
   },
   // {
@@ -80,22 +90,22 @@ const dashboardRoutes = [
   //   component: UserProfile,
   //   layout: "/admin",
   // },
-  {
-    path: "/invoices-and-payments",
-    name: "Invoices",
-    rtlName: "لوحة القيادة",
-    icon: Receipt,
-    component: TableList,
-    layout: "/admin",
-  },
-  {
-    path: "/user",
-    name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/invoices-and-payments",
+  //   name: "Invoices",
+  //   rtlName: "لوحة القيادة",
+  //   icon: Receipt,
+  //   component: TableList,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/user",
+  //   name: "User Profile",
+  //   rtlName: "ملف تعريفي للمستخدم",
+  //   icon: Person,
+  //   component: UserProfile,
+  //   layout: "/admin",
+  // },
   {
     path: "/icons",
     name: "Icons",
@@ -112,17 +122,18 @@ const dashboardRoutes = [
     layout: "/auth",
   },
   {
-    path: "/addItems",
-    name: "Add Item",
-    icon: Unarchive,
-    component: AddItem,
-    layout: "/auth",
-  },
-  {
     path: "/settingPolicies",
-    name: "SettingPolicies",
-    icon: Unarchive,
+    name: "Setting Policies",
+    icon: Gavel,
     component: SettingPolicies,
+    layout: "/admin",
+  },
+
+  {
+    path: "/summary",
+    name: "Summary",
+    icon: ListAltOutlined,
+    component: Summary,
     layout: "/admin",
   },
 ];

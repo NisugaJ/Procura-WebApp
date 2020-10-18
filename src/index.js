@@ -19,7 +19,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-import {isLogged } from "./config/auth.js"
 // core components
 import Admin from "layouts/Admin.js";
 import AuthLayout from "layouts/AuthLayout.js";
@@ -28,6 +27,8 @@ import AuthLayout from "layouts/AuthLayout.js";
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "theme.js";
+import { isLogged } from "config/auth/auth";
+//import { ToastContainer } from "react-toastify";
 
 const hist = createBrowserHistory();
 
@@ -36,11 +37,11 @@ ReactDOM.render(
     <Router history={hist}>
       <Switch>
         <Route path="/admin"
-          render={ props =>{
-            if(isLogged()){
+          render={props => {
+            if (isLogged()) {
               return (<Admin {...props} />)
-            }else{
-              return(<Redirect
+            } else {
+              return (<Redirect
                 to="/auth/login"
               />)
             }

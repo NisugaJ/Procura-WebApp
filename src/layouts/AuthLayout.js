@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import routes from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/AuthLayoutStyle.js";
+import { isLogged } from "config/auth/auth";
 
 
 let ps;
@@ -18,6 +19,8 @@ const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === "/auth") {
+        if(prop.path === '/login' && isLogged())
+          return <Redirect from="/auth" to="/admin/dashboard" />
         return (
           <Route
             path={prop.layout + prop.path}
@@ -28,7 +31,6 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
 
